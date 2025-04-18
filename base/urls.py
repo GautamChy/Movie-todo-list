@@ -9,7 +9,7 @@ urlpatterns = [
     path('task/create',create),
     path('task/<pk>/',mark),
     path('task/<pk>/edit',edit),
-    path('task/<int:pk>/delete',delete,name ='delete_task' )
+    path('task/<pk>/delete/', delete),
    
      
 ]

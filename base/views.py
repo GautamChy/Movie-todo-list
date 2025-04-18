@@ -87,9 +87,9 @@ def edit(request,pk):
 
 
 def delete(request, pk):
-    task = todolist.objects.get(pk=pk)
+    task = todolist.objects.filter(pk=pk)
     task.delete()
-    return redirect('/task')    # or your task list URL
+    return redirect('/task')  
 
 
 

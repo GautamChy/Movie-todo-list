@@ -44,8 +44,8 @@
 
                   <a href ="{{task.pk}}/edit"  class="btn btn-outline-success">Update</a>
 
-                  <a href="{% url 'delete_task' task.id %}" class="btn btn-outline-danger">Delete</a>
-
+                  <a href="/task/{{task.pk}}/delete/" class="btn btn-outline-danger">Delete</a>
+                  
                 </td>
 
               </tr>
