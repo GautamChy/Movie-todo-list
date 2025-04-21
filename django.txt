@@ -65,5 +65,10 @@ Model_name.objects.all().count()
 # count the number of specific data
 Model_name.objects.filter(is_completed = True).count()
 
+# create superuser
+python3 manage.py createsuperuser
+
+# register models in admin
+admin.site.register(todolist)
 
 

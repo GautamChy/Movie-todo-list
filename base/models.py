@@ -9,3 +9,9 @@ class todolist(models.Model):
     
     
     
+    #def __str__(self):
+       # return f'Title- {self.title}'
+     
+    
+    
+    
