@@ -17,17 +17,27 @@ django-admin startproject project_name . (. is optional)
 
 # To show package
 pip freeze > requirements.txt
+pip install -r requirements.txt
 
 #create app
 python3 manage.py startapp app_name
+
+# initialise git
+git init
+
+# add git
+git add .
+
+# git commit 
+git commit -m "message"
 
 # show what you want to create 
 python3 manage.py
 
 # migration file
-python3 manage.py makemigrations  [Note = makemigrations ley matra models lai herxa aru lai herdina like views.py,admin.py]
+python3 manage.py makemigrations  [Note = makemigrations ley matra models lai herxa aru lai herdina like views.py,admin.py][migrations garnu vanda pahila app_name chahee project ko Installed APP vitra  app_name put garney]
 
-# Implement changes to Database
+# Implement changes to Database or To show on db.sqlite3
 python3 manage.py migrate
 
 # Run django server
