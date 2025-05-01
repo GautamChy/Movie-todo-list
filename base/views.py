@@ -1,6 +1,11 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from .models import todolist
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .serializers import TodolistSerializer
+from rest_framework import status
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
 def index(request):
@@ -84,11 +89,73 @@ def edit(request,pk):
     }
     return render(request,'edit.html',context)
 
-
 def delete(request, pk):
     task = todolist.objects.filter(pk=pk)
     task.delete()
     return redirect('/task')  
+
+
+@api_view(['GET','POST'])
+def todo_list(request):
+    if request.method == 'GET':
+        todolist_objects = todolist.objects.all()
+        serializer = TodolistSerializer(todolist_objects,many = True)
+        return Response(serializer.data)
+    
+    elif request.method == 'POST':
+        serializer = TodolistSerializer(data = request.data)
+        serializer.is_valid(raise_exception = True)
+        serializer.save()
+        return Response({
+            "Details": "New todolist created"
+        }, status=status.HTTP_201_CREATED)
+   
+@api_view(['GET','DELETE','PUT','PATCH'])        
+def todo_list_detail(request,id):
+    if request.method == 'GET':
+        todolist_objects = get_object_or_404 (todolist,id = id)
+        serializer = TodolistSerializer(todolist_objects)
+        return Response(serializer.data) 
+    
+    elif request.method == 'DELETE':
+            todolist_objects = todolist.objects.get(id = id)
+            todolist_objects.delete()
+            return Response({
+                'Details':"Todolist item has been successfully deleted"
+            },status=status.HTTP_204_NO_CONTENT)
+        
+        
+    elif request.method == 'PUT':
+        todolist_objects = todolist.objects.get(id=id)
+        serializer = TodolistSerializer(todolist_objects,data = request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({
+            "Details":"Todolist item has been successfully updated with the provided details"
+        },status=status.HTTP_202_ACCEPTED)
+        
+        
+    elif request.method == 'PATCH':
+        todolist_objects = todolist.objects.get(id=id)
+        serializer = TodolistSerializer(todolist_objects,data = request.data,partial = True)
+        serializer.is_valid()
+        serializer.save()
+        return Response({
+            "Details":"Todolist item has been partially updated with the provided details"
+        },status=status.HTTP_206_PARTIAL_CONTENT)
+       
+            
+        
+    
+        
+        
+        
+        
+            
+         
+    
+
+    
 
 
 
